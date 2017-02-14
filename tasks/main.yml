@@ -35,9 +35,9 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: "{{ prometheus_user }}"
-    group: "{{ prometheus_group }}"
-    mode: "u=rwx,g=rx,o="
+    owner: root
+    group: root
+    mode: 0755
   with_items:
     - "{{ prometheus_install_path }}"
     - "{{ prometheus_config_path }}"

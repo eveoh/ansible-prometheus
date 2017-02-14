@@ -85,14 +85,18 @@
 
 - name: set permissions, owner and group
   file:
-    path: "{{ prometheus_install_path }}"
+    path: "{{ item }}"
     state: directory
-    owner: "{{ prometheus_user }}"
-    group: "{{ prometheus_group }}"
+    owner: root
+    group: root
     mode: "go-w"
     recurse: yes
+  with_items:
+    - "{{ prometheus_install_path }}"
+    - "{{ prometheus_rule_path }}"
+    - "{{ prometheus_file_sd_config_path }}"
 
-- name: mkdir for config and data
+- name: mkdir for data
   file:
     path: "{{ item }}"
     state: directory
@@ -100,8 +104,6 @@
     group: "{{ prometheus_group }}"
     mode: "u=rwx,g=rx,o="
   with_items:
-    - "{{ prometheus_rule_path }}"
-    - "{{ prometheus_file_sd_config_path }}"
     - "{{ prometheus_db_path }}"
 
 - name: set prometheus variables

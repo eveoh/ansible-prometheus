@@ -89,8 +89,8 @@
     - name: set permissions, owner and group
       file:
         path: "{{ prometheus_install_path }}/alertmanager"
-        owner: "{{ prometheus_user }}"
-        group: "{{ prometheus_group }}"
+        owner: root
+        group: root
         mode: "go-w"
 
   when: prometheus_alertmanager_version == "git"

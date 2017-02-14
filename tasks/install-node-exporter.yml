@@ -84,7 +84,12 @@
 
 
 - name: set permissions, owner and group
-  file: path={{ prometheus_node_exporter_daemon_dir }}/node_exporter owner={{ prometheus_user }} group={{ prometheus_group }} mode="go-w"
+  file:
+    path: "{{ prometheus_node_exporter_daemon_dir }}"
+    owner: root
+    group: root
+    mode: "go-w"
+    recurse: yes
 
 - name: mkdir for data
   file:
