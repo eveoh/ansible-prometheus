@@ -33,11 +33,23 @@
         prometheus_node_exporter_daemon_dir: "{{ prometheus_install_path }}"
       when: prometheus_node_exporter_version | version_compare('0.12', '<')
 
-    - name: download and untar node_exporter tarball
+    - name: set node_exporter tarball path
+      set_fact:
+        prometheus_node_exporter_tarball_path: "{{ prometheus_persistent_download_path }}/node_exporter-{{ prometheus_node_exporter_version }}.{{ prometheus_platform_suffix }}.tar.gz"
+
+    - name: download node_exporter tarball
+      get_url:
+        url: "{{ prometheus_node_exporter_tarball_url }}"
+        dest: "{{ prometheus_node_exporter_tarball_path }}"
+        checksum: "{{ prometheus_node_exporter_checksum }}"
+      register: node_exporter_download
+
+    - name: untar node_exporter tarball
       unarchive:
-        src: "{{ prometheus_node_exporter_tarball_url }}"
+        src: "{{ prometheus_node_exporter_tarball_path }}"
         dest: "{{ prometheus_install_path }}"
         copy: no
+      when: node_exporter_download|changed
 
   when: prometheus_node_exporter_version != "git"
 

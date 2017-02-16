@@ -33,11 +33,23 @@
         prometheus_daemon_dir: "{{ prometheus_install_path }}"
       when: prometheus_version | version_compare('0.16', '<')
 
-    - name: download and untar prometheus tarball
+    - name: set tarball path
+      set_fact:
+        prometheus_tarball_path: "{{ prometheus_persistent_download_path }}/prometheus-{{ prometheus_version }}.{{ prometheus_platform_suffix }}.tar.gz"
+
+    - name: download prometheus tarball
+      get_url:
+        url: "{{ prometheus_tarball_url }}"
+        dest: "{{ prometheus_tarball_path }}"
+        checksum: "{{ prometheus_checksum }}"
+      register: prometheus_download
+
+    - name: untar prometheus tarball
       unarchive:
-        src: "{{ prometheus_tarball_url }}"
+        src: "{{ prometheus_tarball_path }}"
         dest: "{{ prometheus_install_path }}"
         copy: no
+      when: prometheus_download|changed
 
   when: prometheus_version != "git"
 

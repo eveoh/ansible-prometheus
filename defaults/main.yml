@@ -14,7 +14,9 @@ prometheus_user:   prometheus
 prometheus_group:  prometheus
 
 prometheus_version:                 1.5.0
+prometheus_checksum:                sha256:867e04a78766d3c95d399638bf326b1890117141900cd9730ef61437fd03f9a1
 prometheus_node_exporter_version:   0.13.0
+prometheus_node_exporter_checksum:  sha256:2de5d1e51330c41588ed4c88bc531a3d2dccf6b4d7b99d5782d95cff27a3c049
 prometheus_alertmanager_version:    0.5.1
 
 gosu_version: "1.10"
@@ -30,6 +32,7 @@ prometheus_log_path:             /var/log/prometheus
 prometheus_pid_path:             /var/run/prometheus
 prometheus_alertmanager_db_path: /var/lib/alertmanager
 
+prometheus_persistent_download_path: /opt/prometheus/downloads
 
 prometheus_download_path: /tmp
 prometheus_workdir:       "{{ prometheus_download_path }}/prometheus_workdir"
