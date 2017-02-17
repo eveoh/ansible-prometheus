@@ -46,6 +46,9 @@ prometheus_clean_tarball:     true
 # rebuild each time?  (only applied to `git` version)
 prometheus_rebuild:           false
 
+# how many seconds to wait between SIGTERM and SIGKILL for the prometheus service
+# only used in prometheus.sysvinit.debian.sh.j2  (not in the redhat version)
+prometheus_stop_sigterm_timeout: 15
 
 #
 # derived variables; internal use only.

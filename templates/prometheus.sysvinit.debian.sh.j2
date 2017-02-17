@@ -97,7 +97,7 @@ start () {
 }
 
 stop () {
-  if start-stop-daemon --retry TERM/5/KILL/5 --oknodo --stop --quiet --pidfile $PID 2>&1 1>$LOG
+  if start-stop-daemon --retry TERM/{{ prometheus_stop_sigterm_timeout }}/KILL/5 --oknodo --stop --quiet --pidfile $PID 2>&1 1>$LOG
   then
     log_end_msg 0
     rm $PID
