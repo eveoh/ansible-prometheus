@@ -49,6 +49,7 @@
         src: "{{ prometheus_tarball_path }}"
         dest: "{{ prometheus_install_path }}"
         copy: no
+      notify: restart prometheus
       when: prometheus_download|changed
 
   when: prometheus_version != "git"
